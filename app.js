@@ -3,15 +3,34 @@ const { request } = require("http");
 const app = express();
 const port = 3000;
 
+var users = [
+  {
+    name: "Tejasvee",
+    city: "Raipur",
+  },
+  {
+    name: "Mohak",
+    city: "Jabalpur",
+  },
+  {
+    name: "Ashi",
+    city: "Bhilai",
+  },
+  {
+    name: "Janhavi",
+    city: "Bilaspur",
+  },
+];
+
 app.use(express.json());
 app.get("/", (req, res) => {
-  res.json({ call: "Hello Get", msg: "Success" });
+  res.json({ call: "Hello Get", msg: "Success", users: users });
 });
 
 app.post("/", (request, res) => {
-  const name = request.body.name;
-  const city = request.body.city;
-  res.json({ call: "Hello post", msg: "Success", name: name, city: city });
+  const user = request.body;
+  users.push(user);
+  res.json({ call: "Hello post", msg: "Success", users: users });
 });
 
 app.put("/", (req, res) => {
@@ -19,6 +38,8 @@ app.put("/", (req, res) => {
 });
 
 app.delete("/", (req, res) => {
+  const index = req.query.index;
+  users.splice(index, 1);
   res.json({ call: "Hello delete", msg: "Success" });
 });
 
