@@ -1,24 +1,28 @@
 const express = require("express");
 const { request } = require("http");
 const app = express();
-const port = 3000;
+const port = 3001;
 
 var users = [
   {
     name: "Tejasvee",
     city: "Raipur",
+    id: 100,
   },
   {
     name: "Mohak",
     city: "Jabalpur",
+    id: 101,
   },
   {
     name: "Ashi",
     city: "Bhilai",
+    id: 102,
   },
   {
     name: "Janhavi",
     city: "Bilaspur",
+    id: 103,
   },
 ];
 
@@ -33,8 +37,45 @@ app.post("/", (request, res) => {
   res.json({ call: "Hello post", msg: "Success", users: users });
 });
 
-app.put("/", (req, res) => {
-  res.json({ call: "Hello put", msg: "Success" });
+app.put("/updateUserByCity", (req, res) => {
+  const userId = req.query.userId;
+  const tempuserId = users.findIndex((user) => user.id == userId);
+  const newCity = req.body.city;
+  users[tempuserId].city = newCity;
+  const updatedUser = users[tempuserId];
+  res.json({
+    call: "Hello updateUserByCity",
+    msg: "Success",
+    user: updatedUser,
+  });
+});
+
+app.put("/updateUserByName", (req, res) => {
+  const userId = req.query.userId;
+  const tempuserId = users.findIndex((user) => user.id == userId);
+  const newName = req.body.name;
+  users[tempuserId].name = newName;
+  const updatedUser = users[tempuserId];
+  res.json({
+    call: "Hello updateUserByName",
+    msg: "Success",
+    user: updatedUser,
+  });
+});
+
+app.put("/updateUserByValue", (req, res) => {
+  const userId = req.query.userId;
+  const tempuserId = users.findIndex((user) => user.id == userId);
+  const newName = req.body.name;
+  users[tempuserId].name = newName;
+  const newCity = req.body.city;
+  users[tempuserId].city = newCity;
+  const updatedUser = users[tempuserId];
+  res.json({
+    call: "Hello updateUserByValue",
+    msg: "Success",
+    user: updatedUser,
+  });
 });
 
 app.delete("/", (req, res) => {
